@@ -884,18 +884,36 @@ button {
 }
 
 .store-product-media {
+  position: relative;
   display: flex;
   width: 100%;
   min-height: 17rem;
+  overflow: hidden;
   align-items: end;
   justify-content: start;
-  background-position: center;
-  background-size: cover;
   padding: 0.8rem;
   box-shadow: inset 0 -8rem 5rem rgb(22 22 22 / 0.38);
 }
 
+.store-product-media::after {
+  position: absolute;
+  inset: 0;
+  content: "";
+  box-shadow: inset 0 -8rem 5rem rgb(22 22 22 / 0.38);
+  pointer-events: none;
+}
+
+.store-product-media img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
 .store-product-media span {
+  position: relative;
+  z-index: 1;
   border: 1px solid rgb(255 255 255 / 0.28);
   border-radius: 999px;
   background: rgb(246 241 232 / 0.2);

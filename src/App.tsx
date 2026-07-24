@@ -30,6 +30,7 @@ import { type CSSProperties, MouseEvent, useEffect, useMemo, useRef, useState } 
 import {
   Collection,
   Environment,
+  PRODUCT_IMAGES,
   Product,
   collections,
   defaultComposer,
@@ -741,43 +742,47 @@ function AllProducts({ cartCount, onCart, onSelect, onAdd }: AllProductsProps) {
         </div>
 
         <div className="store-product-grid">
-          {visibleProducts.map((product) => (
-            <motion.article
-              key={product.id}
-              className="store-product-card"
-              layout
-              whileHover={{ y: -6 }}
-              transition={{ type: "spring", stiffness: 160, damping: 18 }}
-            >
-              <button
-                className="store-product-media"
-                style={{ backgroundImage: `url(${asset(product.image)})` }}
-                onClick={() => onSelect(product)}
-                aria-label={`Ver detalhes de ${product.name}`}
+          {visibleProducts.map((product) => {
+            const productImage = PRODUCT_IMAGES[product.id] ?? product.image;
+
+            return (
+              <motion.article
+                key={product.id}
+                className="store-product-card"
+                layout
+                whileHover={{ y: -6 }}
+                transition={{ type: "spring", stiffness: 160, damping: 18 }}
               >
-                <span>{product.collection}</span>
-              </button>
+                <button
+                  className="store-product-media"
+                  onClick={() => onSelect(product)}
+                  aria-label={`Ver detalhes de ${product.name}`}
+                >
+                  <img src={asset(productImage)} alt="" loading="lazy" />
+                  <span>{product.collection}</span>
+                </button>
 
-              <div className="store-product-body">
-                <div>
-                  <span>{product.category}</span>
-                  <h3>{product.name}</h3>
-                  <p>{product.material}</p>
-                </div>
-
-                <div className="store-product-footer">
-                  <strong>{money.format(product.price)}</strong>
+                <div className="store-product-body">
                   <div>
-                    <button onClick={() => onSelect(product)}>Ver</button>
-                    <button onClick={() => onAdd(product)} aria-label={`Adicionar ${product.name} ao carrinho`}>
-                      <ShoppingBag size={17} />
-                      Carrinho
-                    </button>
+                    <span>{product.category}</span>
+                    <h3>{product.name}</h3>
+                    <p>{product.material}</p>
+                  </div>
+
+                  <div className="store-product-footer">
+                    <strong>{money.format(product.price)}</strong>
+                    <div>
+                      <button onClick={() => onSelect(product)}>Ver</button>
+                      <button onClick={() => onAdd(product)} aria-label={`Adicionar ${product.name} ao carrinho`}>
+                        <ShoppingBag size={17} />
+                        Carrinho
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.article>
-          ))}
+              </motion.article>
+            );
+          })}
         </div>
       </div>
     </section>

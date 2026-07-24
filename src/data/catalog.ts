@@ -223,6 +223,10 @@ export const products: Product[] = [
   },
 ];
 
+export const PRODUCT_IMAGES: Record<string, string> = Object.fromEntries(
+  products.map((product) => [product.id, product.image]),
+);
+
 export const environments: Environment[] = [
   {
     id: "living",
